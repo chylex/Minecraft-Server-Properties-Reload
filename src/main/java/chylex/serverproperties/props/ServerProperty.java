@@ -10,8 +10,8 @@ public abstract class ServerProperty<T> {
 		return !Objects.equals(get(oldProperties), get(newProperties));
 	}
 	
-	public final void apply(final DedicatedServer server, final DedicatedServerProperties source, final DedicatedServerPropertiesMixin target) {
-		apply(server, target, get(source));
+	public final void apply(final DedicatedServer server, final DedicatedServerProperties source, final DedicatedServerPropertiesMixin target, final PropertyChangeCallback callback) {
+		apply(server, target, get(source), callback);
 	}
 	
 	public final String toStringFrom(final DedicatedServerProperties source) {
@@ -20,7 +20,7 @@ public abstract class ServerProperty<T> {
 	
 	public abstract T get(DedicatedServerProperties properties);
 	
-	public abstract void apply(DedicatedServer server, DedicatedServerPropertiesMixin target, T value);
+	public abstract void apply(final DedicatedServer server, DedicatedServerPropertiesMixin target, T value, final PropertyChangeCallback callback);
 	
 	public String toString(final T value) {
 		return Objects.toString(value, "<null>");

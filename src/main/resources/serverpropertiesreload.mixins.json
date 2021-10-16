@@ -6,7 +6,12 @@
   "compatibilityLevel": "JAVA_16",
   "server": [
     "CommandMixin",
+    "DedicatedServerMixin",
     "DedicatedServerPropertiesMixin",
+    "LevelSettingsMixin",
+    "MinecraftServerMixin",
+    "PlayerListMixin",
+    "PrimaryLevelDataMixin",
     "SettingsMixin"
   ],
   "injectors": {

@@ -2,6 +2,8 @@ package chylex.serverproperties.command;
 
 import chylex.serverproperties.mixin.DedicatedServerPropertiesMixin;
 import chylex.serverproperties.mixin.SettingsMixin;
+import chylex.serverproperties.props.PropertyChangeCallback;
+import chylex.serverproperties.props.PropertyChangeFinalizer;
 import chylex.serverproperties.props.ServerProperties;
 import chylex.serverproperties.props.ServerProperty;
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,7 +14,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.dedicated.DedicatedServerProperties;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import static net.minecraft.commands.Commands.literal;
@@ -46,6 +50,9 @@ public final class PropertiesCommand {
 		int reloadedProperties = 0;
 		int failedProperties = 0;
 		
+		final Map<String, PropertyChangeFinalizer> finalizers = new HashMap<>();
+		final PropertyChangeCallback callback = finalizer -> finalizers.putIfAbsent(finalizer.getKey(), finalizer);
+		
 		for (final Entry<String, ServerProperty<?>> entry : ServerProperties.all().stream().sorted(Entry.comparingByKey()).toList()) {
 			final String name = entry.getKey();
 			final ServerProperty<?> prop = entry.getValue();
@@ -57,7 +64,7 @@ public final class PropertiesCommand {
 				final String newValue = prop.toStringFrom(newProperties);
 				
 				try {
-					prop.apply(dedicatedServer, newProperties, (DedicatedServerPropertiesMixin)oldProperties);
+					prop.apply(dedicatedServer, newProperties, (DedicatedServerPropertiesMixin)oldProperties, callback);
 				} catch (final UnsupportedOperationException e) {
 					s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.RED)
 						.append(new TextComponent(" cannot be reloaded").withStyle(ChatFormatting.WHITE)), true);
@@ -73,6 +80,10 @@ public final class PropertiesCommand {
 				
 				++reloadedProperties;
 			}
+		}
+		
+		for (final PropertyChangeFinalizer finalizer : finalizers.values()) {
+			finalizer.run(dedicatedServer);
 		}
 		
 		for (final String name : unknownPropertyNames.stream().sorted().toList()) {
