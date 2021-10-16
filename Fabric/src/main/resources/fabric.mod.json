@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "serverpropertiesreload",
+  "name": "${name}",
+  "description": "${description}",
+  "version": "${version}",
+  "license": "${license}",
+  
+  "authors": [
+    "${author}"
+  ],
+  
+  "contact": {
+    "issues": "${issuesURL}",
+    "sources": "${sourcesURL}"
+  },
+  
+  "environment": "server",
+  "mixins": [
+    "serverpropertiesreload.mixins.json"
+  ]
+}

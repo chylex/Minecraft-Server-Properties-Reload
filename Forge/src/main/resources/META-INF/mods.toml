@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "[37,)"
+
+authors = "${author}"
+license = "${license}"
+issueTrackerURL = "${issuesURL}"
+
+[[mods]]
+modId = "serverpropertiesreload"
+version = "${version}"
+displayName = "${name}"
+description = "${description}"
+
+[[dependencies.serverpropertiesreload]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.17.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.serverpropertiesreload]]
+modId = "forge"
+mandatory = true
+versionRange = "[37,)"
+ordering = "NONE"
+side = "BOTH"

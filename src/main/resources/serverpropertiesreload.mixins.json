@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "chylex.serverproperties.mixin",
+  "refmap": "serverpropertiesreload.refmap.json",
+  "compatibilityLevel": "JAVA_16",
+  "server": [
+    "CommandMixin",
+    "DedicatedServerPropertiesMixin",
+    "SettingsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
