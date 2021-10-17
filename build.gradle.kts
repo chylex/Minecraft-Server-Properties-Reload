@@ -125,8 +125,18 @@ subprojects {
 
 tasks.register("setupIdea") {
 	group = "mod"
-	dependsOn(project(":Forge").tasks.getByName("genIntellijRuns"))
-	dependsOn(project(":Fabric").tasks.getByName("genSources"))
+	
+	dependsOn(tasks.findByName("decompile"))
+	
+	val forge = findProject(":Forge")
+	if (forge != null) {
+		dependsOn(forge.tasks.getByName("genIntellijRuns"))
+	}
+	
+	val fabric = findProject(":Fabric")
+	if (fabric != null) {
+		dependsOn(fabric.tasks.getByName("genSources"))
+	}
 }
 
 val copyJars = tasks.register<Copy>("copyJars") {
@@ -134,13 +144,13 @@ val copyJars = tasks.register<Copy>("copyJars") {
 	duplicatesStrategy = EXCLUDE
 	
 	for (subproject in subprojects) {
-		dependsOn(subproject.tasks.build)
+		dependsOn(subproject.tasks.assemble)
 		from(subproject.base.libsDirectory.file("${subproject.base.archivesName.get()}-$jarVersion.jar"))
 	}
 	
 	into(file("${project.buildDir}/dist"))
 }
 
-tasks.build {
+tasks.assemble {
 	finalizedBy(copyJars)
 }
