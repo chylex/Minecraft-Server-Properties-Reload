@@ -1,0 +1,68 @@
+<h2>How to Use</h2>
+<p>Use the command <span style="font-family: courier new, courier, monospace;">/properties reload</span> to reload the server.properties file (requires permission level 2 or higher). You will see a report of which properties were changed, and which are unsupported.</p>
+<h3>Supported Properties</h3>
+<p>As of 1.17, the following properties are supported:</p>
+<ul>
+  <li><span style="font-family: courier new, courier, monospace;">allow-flight</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">allow-nether</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">broadcast-console-to-ops</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">broadcast-rcon-to-ops</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">difficulty</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enable-command-block</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enable-jmx-monitoring</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enable-query</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enable-rcon</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enable-status</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">enforce-whitelist</span>&nbsp;&nbsp;<span style="color: #808080;">[ When enabled, it will kick non-whitelisted players even if the whitelist is disabled. This is consistent with Minecraft's existing inconsistency (for ex. <span style="font-family: courier new, courier, monospace;">/deop</span> command will do the same). ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">entity-broadcast-range-percentage</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">force-gamemode</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. Use <span style="font-family: courier new, courier, monospace;">/defaultgamemode</span> to set game mode for all online players. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">function-permission-level</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only takes place after reloading resource packs using <span style="font-family: courier new, courier, monospace;">/reload</span> ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">gamemode</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. Use <span style="font-family: courier new, courier, monospace;">/defaultgamemode</span> to set game mode for all online players. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">hardcore</span>&nbsp;&nbsp;<span style="color: #808080;">[ The heart icon and respawn menu will only update for players who login after the change, but respawning itself works as expected. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">max-players</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who try to login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">max-world-size</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">motd</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">network-compression-threshold</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. When changed while a player is logging in, it might cause the connection to be setup incorrectly and cause errors. Be careful. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">online-mode</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">op-permission-level</span>&nbsp;&nbsp;<span style="color: #808080;">[ Works the same as editing <span style="font-family: courier new, courier, monospace;">server.properties</span> and restarting, i.e. it only applies to users <span style="font-family: courier new, courier, monospace;">/op</span>'d after the change and does not affect existing operators. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">player-idle-timeout</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">prevent-proxy-connections</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">pvp</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">query.port</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">rcon.password</span>&nbsp;&nbsp;<span style="color: #808080;">[ Any currently connected RCON clients will be disconnected. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">rcon.port</span>&nbsp;&nbsp;<span style="color: #808080;">[ Any currently connected RCON clients will be disconnected. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">require-resource-pack</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">resource-pack</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">resource-pack-prompt</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">resource-pack-sha1</span>&nbsp;&nbsp;<span style="color: #808080;">[ Only affects players who login after the change. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">spawn-animals</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">spawn-monsters</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">spawn-npcs</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">spawn-protection</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">view-distance</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">white-list</span></li>
+</ul>
+<h3>Unsupported Properties</h3>
+<ul>
+  <li><span style="font-family: courier new, courier, monospace;">generate-structures</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">generator-settings</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">level-name</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">level-seed</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">level-type</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">max-tick-time</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">rate-limit</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">resource-pack-hash</span>&nbsp;&nbsp;<span style="color: #808080;">[ Use <span style="font-family: courier new, courier, monospace;">resource-pack-sha1</span> instead. ]</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">server-ip</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">server-port</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">snooper-enabled</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">sync-chunk-writes</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">text-filtering-config</span></li>
+  <li><span style="font-family: courier new, courier, monospace;">use-native-transport</span></li>
+</ul>
+<h2>Installation</h2>
+<p>The mod only works on dedicated servers. The following mod loaders are supported:</p>
+<ul>
+  <li><strong>Fabric</strong> (note: this mod does not require Fabric API)</li>
+  <li><strong>Forge</strong></li>
+</ul>
+<p>After you install the mod loader of your choice, download the mod and place the .jar file into the mods folder of your server.</p>
