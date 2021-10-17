@@ -53,6 +53,8 @@ public final class PropertiesCommand {
 		final Map<String, PropertyChangeFinalizer> finalizers = new HashMap<>();
 		final PropertyChangeCallback callback = finalizer -> finalizers.putIfAbsent(finalizer.getKey(), finalizer);
 		
+		newProperties.getWorldGenSettings(dedicatedServer.registryAccess()); // loads worldgen property defaults
+		
 		for (final Entry<String, ServerProperty<?>> entry : ServerProperties.all().stream().sorted(Entry.comparingByKey()).toList()) {
 			final String name = entry.getKey();
 			final ServerProperty<?> prop = entry.getValue();
