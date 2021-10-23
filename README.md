@@ -4,7 +4,7 @@ Use the command `/properties reload` to reload the server.properties file (requi
 
 ## Supported Properties
 
-As of 1.17, the following properties are supported:
+As of 1.18, the following properties are supported:
 
 - `allow-flight`
 - `allow-nether`
@@ -57,6 +57,7 @@ As of 1.17, the following properties are supported:
   - Only affects players who login after the change.
 - `resource-pack-sha1`
   - Only affects players who login after the change.
+- `simulation-distance`
 - `spawn-animals`
 - `spawn-monsters`
 - `spawn-npcs`
