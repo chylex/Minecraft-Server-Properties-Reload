@@ -40,6 +40,7 @@ public interface DedicatedServerPropertiesMixin {
 	@Mutable @Accessor void setResourcePack(String resourcePack);
 	@Mutable @Accessor void setResourcePackPrompt(String resourcePackPrompt);
 	@Mutable @Accessor void setResourcePackSha1(String sha1);
+	@Mutable @Accessor void setSimulationDistance(int simulationDistance);
 	@Mutable @Accessor void setSpawnAnimals(boolean spawnAnimals);
 	@Mutable @Accessor void setSpawnMonsters(boolean spawnMonsters);
 	@Mutable @Accessor void setSpawnNpcs(boolean spawnNpcs);

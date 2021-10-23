@@ -31,6 +31,7 @@ import chylex.serverproperties.props.supported.RequireResourcePackProperty;
 import chylex.serverproperties.props.supported.ResourcePackPromptProperty;
 import chylex.serverproperties.props.supported.ResourcePackProperty;
 import chylex.serverproperties.props.supported.ResourcePackSha1Property;
+import chylex.serverproperties.props.supported.SimulationDistanceProperty;
 import chylex.serverproperties.props.supported.SpawnAnimalsProperty;
 import chylex.serverproperties.props.supported.SpawnMonstersProperty;
 import chylex.serverproperties.props.supported.SpawnNpcsProperty;
@@ -103,6 +104,7 @@ public final class ServerProperties {
 		register("resource-pack", ResourcePackProperty.INSTANCE);
 		register("resource-pack-prompt", ResourcePackPromptProperty.INSTANCE);
 		register("resource-pack-sha1", ResourcePackSha1Property.INSTANCE);
+		register("simulation-distance", SimulationDistanceProperty.INSTANCE);
 		register("spawn-animals", SpawnAnimalsProperty.INSTANCE);
 		register("spawn-monsters", SpawnMonstersProperty.INSTANCE);
 		register("spawn-npcs", SpawnNpcsProperty.INSTANCE);
