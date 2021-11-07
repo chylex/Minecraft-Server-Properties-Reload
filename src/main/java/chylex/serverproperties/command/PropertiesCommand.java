@@ -13,6 +13,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.dedicated.DedicatedServerProperties;
+import org.apache.logging.log4j.LogManager;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,42 +62,80 @@ public final class PropertiesCommand {
 			
 			unknownPropertyNames.remove(name);
 			
-			if (prop.hasChanged(oldProperties, newProperties)) {
-				final String oldValue = prop.toStringFrom(oldProperties);
-				final String newValue = prop.toStringFrom(newProperties);
-				
-				try {
-					prop.apply(dedicatedServer, newProperties, (DedicatedServerPropertiesMixin)oldProperties, callback);
-				} catch (final UnsupportedOperationException e) {
-					s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.RED)
-						.append(new TextComponent(" cannot be reloaded").withStyle(ChatFormatting.WHITE)), true);
+			try {
+				if (prop.hasChanged(oldProperties, newProperties)) {
+					final String oldValue = prop.toStringFrom(oldProperties);
+					final String newValue = prop.toStringFrom(newProperties);
 					
-					++failedProperties;
-					continue;
+					try {
+						prop.apply(dedicatedServer, newProperties, (DedicatedServerPropertiesMixin)oldProperties, callback);
+						sendReloadSuccessMessage(s, name, oldValue, newValue);
+						++reloadedProperties;
+					} catch (final UnsupportedOperationException e) {
+						sendReloadUnsupportedMessage(s, name);
+						++failedProperties;
+					}
 				}
-				
-				s.sendSuccess(new TextComponent("  " + name + ": ").withStyle(ChatFormatting.LIGHT_PURPLE)
-					.append(new TextComponent(oldValue).withStyle(ChatFormatting.WHITE))
-					.append(new TextComponent(" -> ").withStyle(ChatFormatting.GRAY))
-					.append(new TextComponent(newValue).withStyle(ChatFormatting.WHITE)), true);
-				
-				++reloadedProperties;
+			} catch (final Throwable t) {
+				sendReloadErrorMessage(s, name);
+				LogManager.getLogger().error("Caught exception while reloading a property: " + name, t);
+				++failedProperties;
 			}
 		}
 		
+		int finalizerErrors = 0;
+		
 		for (final PropertyChangeFinalizer finalizer : finalizers.values()) {
-			finalizer.run(dedicatedServer);
+			try {
+				finalizer.run(dedicatedServer);
+			} catch (final Throwable t) {
+				++finalizerErrors;
+				LogManager.getLogger().error("Caught exception while finalizing a reload: " + finalizer.getKey(), t);
+			}
 		}
 		
 		for (final String name : unknownPropertyNames.stream().sorted().toList()) {
-			s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.GRAY)
-				.append(new TextComponent(" skipped unknown property").withStyle(ChatFormatting.WHITE)), true);
+			sendPropertySkippedMessage(s, name);
 		}
 		
 		if (reloadedProperties == 0 && failedProperties == 0) {
-			s.sendSuccess(new TextComponent("  Found no changes").withStyle(ChatFormatting.GRAY), true);
+			sendNoChangesMessage(s);
+		}
+		
+		if (finalizerErrors > 0) {
+			sendErrorOccurredMessage(s);
 		}
 		
 		return reloadedProperties;
+	}
+	
+	private static void sendReloadSuccessMessage(final CommandSourceStack s, final String name, final String oldValue, final String newValue) {
+		s.sendSuccess(new TextComponent("  " + name + ": ").withStyle(ChatFormatting.LIGHT_PURPLE)
+			.append(new TextComponent(oldValue).withStyle(ChatFormatting.WHITE))
+			.append(new TextComponent(" -> ").withStyle(ChatFormatting.GRAY))
+			.append(new TextComponent(newValue).withStyle(ChatFormatting.WHITE)), true);
+	}
+	
+	private static void sendReloadUnsupportedMessage(final CommandSourceStack s, final String name) {
+		s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.RED)
+			.append(new TextComponent(" cannot be reloaded (unsupported)").withStyle(ChatFormatting.WHITE)), true);
+	}
+	
+	private static void sendReloadErrorMessage(final CommandSourceStack s, final String name) {
+		s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.RED)
+			.append(new TextComponent(" cannot be reloaded (error)").withStyle(ChatFormatting.WHITE)), true);
+	}
+	
+	private static void sendPropertySkippedMessage(final CommandSourceStack s, final String name) {
+		s.sendSuccess(new TextComponent("  " + name + ':').withStyle(ChatFormatting.GRAY)
+			.append(new TextComponent(" skipped unknown property").withStyle(ChatFormatting.WHITE)), true);
+	}
+	
+	private static void sendNoChangesMessage(final CommandSourceStack s) {
+		s.sendSuccess(new TextComponent("  Found no changes").withStyle(ChatFormatting.GRAY), true);
+	}
+	
+	private static void sendErrorOccurredMessage(final CommandSourceStack s) {
+		s.sendSuccess(new TextComponent("An error occurred, please check server logs.").withStyle(ChatFormatting.RED), true);
 	}
 }
