@@ -48,7 +48,6 @@ import chylex.serverproperties.props.unsupported.RateLimitProperty;
 import chylex.serverproperties.props.unsupported.ResourcePackHashProperty;
 import chylex.serverproperties.props.unsupported.ServerIpProperty;
 import chylex.serverproperties.props.unsupported.ServerPortProperty;
-import chylex.serverproperties.props.unsupported.SnooperEnabledProperty;
 import chylex.serverproperties.props.unsupported.SyncChunkWrites;
 import chylex.serverproperties.props.unsupported.TextFilteringConfigProperty;
 import chylex.serverproperties.props.unsupported.UseNativeTransportProperty;
@@ -122,7 +121,6 @@ public final class ServerProperties {
 		register("resource-pack-hash", ResourcePackHashProperty.INSTANCE);
 		register("server-ip", ServerIpProperty.INSTANCE);
 		register("server-port", ServerPortProperty.INSTANCE);
-		register("snooper-enabled", SnooperEnabledProperty.INSTANCE);
 		register("sync-chunk-writes", SyncChunkWrites.INSTANCE);
 		register("text-filtering-config", TextFilteringConfigProperty.INSTANCE);
 		register("use-native-transport", UseNativeTransportProperty.INSTANCE);
