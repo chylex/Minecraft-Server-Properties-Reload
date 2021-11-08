@@ -15,6 +15,7 @@ import chylex.serverproperties.props.supported.ForceGamemodeProperty;
 import chylex.serverproperties.props.supported.FunctionPermissionLevel;
 import chylex.serverproperties.props.supported.GamemodeProperty;
 import chylex.serverproperties.props.supported.HardcoreProperty;
+import chylex.serverproperties.props.supported.HideOnlinePlayersProperty;
 import chylex.serverproperties.props.supported.MaxPlayersProperty;
 import chylex.serverproperties.props.supported.MaxWorldSizeProperty;
 import chylex.serverproperties.props.supported.MotdProperty;
@@ -87,6 +88,7 @@ public final class ServerProperties {
 		register("function-permission-level", FunctionPermissionLevel.INSTANCE);
 		register("gamemode", GamemodeProperty.INSTANCE);
 		register("hardcore", HardcoreProperty.INSTANCE);
+		register("hide-online-players", HideOnlinePlayersProperty.INSTANCE);
 		register("max-players", MaxPlayersProperty.INSTANCE);
 		register("max-world-size", MaxWorldSizeProperty.INSTANCE);
 		register("motd", MotdProperty.INSTANCE);

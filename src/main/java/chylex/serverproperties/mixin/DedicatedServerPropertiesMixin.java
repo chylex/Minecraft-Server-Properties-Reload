@@ -25,6 +25,7 @@ public interface DedicatedServerPropertiesMixin {
 	@Mutable @Accessor void setFunctionPermissionLevel(int functionPermissionLevel);
 	@Mutable @Accessor void setGamemode(GameType gamemode);
 	@Mutable @Accessor void setHardcore(boolean hardcore);
+	@Mutable @Accessor void setHideOnlinePlayers(boolean hideOnlinePlayers);
 	@Mutable @Accessor void setMaxPlayers(int maxPlayers);
 	@Mutable @Accessor void setMaxWorldSize(int maxWorldSize);
 	@Mutable @Accessor void setMotd(String motd);
