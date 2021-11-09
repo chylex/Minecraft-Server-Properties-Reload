@@ -13,5 +13,8 @@
     "PlayerListMixin",
     "PrimaryLevelDataMixin",
     "SettingsMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

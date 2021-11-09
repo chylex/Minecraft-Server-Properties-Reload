@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Commands.class)
 public class CommandMixin {
-	@Inject(method = "<init>", at = @At("RETURN"), require = 1)
+	@Inject(method = "<init>", at = @At("RETURN"))
 	private void init(final CommandSelection commandSelection, final CallbackInfo ci) {
 		@SuppressWarnings("ConstantConditions")
 		final Commands commands = (Commands)(Object)this;
