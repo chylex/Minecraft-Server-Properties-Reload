@@ -31,7 +31,16 @@ plugins {
 
 idea {
 	module {
-		excludeDirs.add(project.file("run"))
+		excludeDirs.add(file("gradle"))
+		excludeDirs.add(file("run"))
+		
+		if (findProject(":Forge") == null) {
+			excludeDirs.add(file("Forge"))
+		}
+		
+		if (findProject(":Fabric") == null) {
+			excludeDirs.add(file("Fabric"))
+		}
 	}
 }
 
