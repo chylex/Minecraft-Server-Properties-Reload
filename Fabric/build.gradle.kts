@@ -4,7 +4,7 @@ val fabricVersion: String by project
 
 plugins {
 	idea
-	id("fabric-loom") version "0.10-SNAPSHOT"
+	id("fabric-loom") version "0.11-SNAPSHOT"
 }
 
 dependencies {
@@ -27,6 +27,14 @@ loom {
 			server()
 			runDir("../run")
 			ideConfigGenerated(true)
+		}
+		
+		register("serverTest") {
+			configName = "Fabric Server Test"
+			server()
+			runDir("./build/tmp/fabric-server-test")
+			property("fabric.log.disableAnsi", "true")
+			ideConfigGenerated(false)
 		}
 	}
 	

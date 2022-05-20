@@ -1,6 +1,9 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.file.DuplicatesStrategy.EXCLUDE
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.concurrent.thread
 
 val modId: String by project
 val modName: String by project
@@ -32,6 +35,7 @@ plugins {
 idea {
 	module {
 		excludeDirs.add(file("gradle"))
+		excludeDirs.add(file("logs"))
 		excludeDirs.add(file("run"))
 		
 		if (findProject(":Forge") == null) {
@@ -52,6 +56,9 @@ repositories {
 dependencies {
 	implementation("org.spongepowered:mixin:$mixinVersion")
 	api("com.google.code.findbugs:jsr305:3.0.2")
+	
+	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+	testImplementation("nl.vv32.rcon:rcon:1.2.0")
 }
 
 base {
@@ -162,4 +169,30 @@ val copyJars = tasks.register<Copy>("copyJars") {
 
 tasks.assemble {
 	finalizedBy(copyJars)
+}
+
+tasks.test {
+	useJUnitPlatform()
+	
+	val fabric = findProject(":Fabric")
+	if (fabric == null) {
+		enabled = false
+	}
+	else {
+		doFirst {
+			val resourceDir = rootProject.sourceSets.test.get().resources.srcDirs.single()
+			val runDir = File(buildDir, "tmp/fabric-server-test")
+			runDir.mkdirs()
+			
+			File(runDir, "eula.txt").writeText("eula=true", StandardCharsets.UTF_8)
+			File(resourceDir, "server.properties").copyTo(File(runDir, "server.properties"), overwrite = true)
+			
+			thread(name = "Minecraft Test Server", start = true, isDaemon = true) {
+				val gradle = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
+				val process = ProcessBuilder().command(gradle, "--no-daemon", "--console=plain", ":Fabric:runServerTest").start()
+				val reader = process.inputReader(StandardCharsets.UTF_8)
+				reader.forEachLine { println("[Test Server] $it") }
+			}
+		}
+	}
 }
