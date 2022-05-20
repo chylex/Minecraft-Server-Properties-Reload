@@ -188,7 +188,6 @@ tasks.test {
 			File(resourceDir, "server.properties").copyTo(File(runDir, "server.properties"), overwrite = true)
 			
 			thread(name = "Minecraft Test Server", start = true, isDaemon = true) {
-				println("DIR: ${File(".").absolutePath}")
 				val gradle = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "./gradlew"
 				val process = ProcessBuilder().command(gradle, "--no-daemon", "--console=plain", ":Fabric:runServerTest").start()
 				val reader = process.inputReader(StandardCharsets.UTF_8)
