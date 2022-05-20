@@ -11,6 +11,8 @@ dependencies {
 	minecraft("com.mojang:minecraft:$minecraftVersion")
 	modImplementation("net.fabricmc:fabric-loader:$fabricVersion")
 	mappings(loom.officialMojangMappings())
+	
+	testImplementation("net.fabricmc.fabric-api:fabric-api:0.47.8+1.18.2")
 }
 
 loom {
@@ -32,8 +34,9 @@ loom {
 		register("serverTest") {
 			configName = "Fabric Server Test"
 			server()
+			source(sourceSets.test.get())
 			runDir("./build/tmp/fabric-server-test")
-			property("fabric.log.disableAnsi", "true")
+			property("fabric-api-gametest", "1")
 			ideConfigGenerated(false)
 		}
 	}

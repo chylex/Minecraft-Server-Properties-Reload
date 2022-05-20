@@ -18,5 +18,11 @@
   "environment": "server",
   "mixins": [
     "serverpropertiesreload.mixins.json"
-  ]
+  ],
+  
+  "entrypoints": {
+    "servertest": [
+      "chylex.serverproperties.test.TestFinder"
+    ]
+  }
 }
